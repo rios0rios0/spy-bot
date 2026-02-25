@@ -86,4 +86,4 @@ The robot uses a differential-drive scheme with two DC motors. Each motor has tw
 
 ## Contributing
 
-This project is no longer actively maintained. You may submit small bug fixes or documentation improvements via Pull Request, but reviews may be infrequent and contributions are not guaranteed to be merged.
+Contributions are welcome. See [CONTRIBUTING.md](CONTRIBUTING.md) for guidelines.
