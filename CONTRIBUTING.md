@@ -1,20 +1,21 @@
 # Contributing
 
-Contributions are welcome. By participating, you agree to maintain a respectful and constructive environment.
+> **This project was discontinued in September 2018 and is no longer actively maintained.**
+> The repository is preserved as a historical reference. No new features or bug fixes are planned.
 
-For coding standards, testing patterns, architecture guidelines, commit conventions, and all
-development practices, refer to the **[Development Guide](https://github.com/rios0rios0/guide/wiki)**.
+## Historical Build Information
 
-## Prerequisites
+This project was built using the following tools and technologies:
 
-- [Arduino IDE](https://www.arduino.cc/en/software) 2+
+- **Language:** Arduino C++ (`.ino` sketch)
+- **Platform:** Arduino (ATmega-based) with Ethernet Shield (W5100/SPI)
+- **Protocols:** HTTP/1.1 web server, MJPEG stream
+- **Hardware:** Arduino board, Ethernet Shield, H-bridge motor driver (L298N or similar), two DC motors, IP camera
 
-## Development Workflow
+### Build Steps (Historical)
 
-1. Fork and clone the repository
-2. Create a branch: `git checkout -b feat/my-change`
-3. Open the sketch in Arduino IDE
-4. Make your changes
-5. Verify the sketch compiles
-6. Commit following the [commit conventions](https://github.com/rios0rios0/guide/wiki/Life-Cycle/Git-Flow)
-7. Open a pull request against `main`
+1. Install the [Arduino IDE](https://www.arduino.cc/en/software)
+2. Open `main.ino` in the Arduino IDE
+3. Update the static IP address (`192.168.1.101`) and camera IP (`192.168.1.200`) to match your network
+4. Upload to the Arduino board
+5. Open a browser and navigate to `http://<arduino-ip>`
