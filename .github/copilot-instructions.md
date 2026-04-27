@@ -19,6 +19,7 @@ spy-bot/
 │   └── hold.js           # JavaScript library implementing long-press detection
 │                         #   with configurable delay (300ms) and event prevention
 ├── README.md             # Project documentation
+├── CHANGELOG.md          # Release history (Keep a Changelog format)
 ├── CONTRIBUTING.md       # Historical build information and discontinued status notice
 └── LICENSE               # Project license
 ```
