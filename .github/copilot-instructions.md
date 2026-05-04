@@ -18,6 +18,9 @@ spy-bot/
 │   ├── testehtml.html    # Test page for hold-to-click button behavior
 │   └── hold.js           # JavaScript library implementing long-press detection
 │                         #   with configurable delay (300ms) and event prevention
+├── .github/
+│   └── workflows/
+│       └── release.yaml  # CI workflow: creates Git tags on main-branch merges
 ├── README.md             # Project documentation
 ├── CHANGELOG.md          # Release history (Keep a Changelog format)
 ├── CONTRIBUTING.md       # Historical build information and discontinued status notice
@@ -71,7 +74,7 @@ Pan/tilt commands are sent directly from the browser to the IP camera via CGI li
 
 ## Build and Deployment
 
-There is no automated build system, CI/CD pipeline, or test suite — this is an embedded firmware project.
+There is no automated build system or test suite — this is an embedded firmware project. A GitHub Actions workflow (`release.yaml`) creates Git tags when bump PRs merge to `main`.
 
 ### Hardware Requirements
 
