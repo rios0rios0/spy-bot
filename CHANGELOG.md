@@ -16,6 +16,8 @@ Exceptions are acceptable depending on the circumstances (critical bug fixes tha
 
 ## [Unreleased]
 
+## [0.2.0] - 2026-06-30
+
 ### Added
 
 - created `CLAUDE.md` to provide Claude Code guidance covering the character-by-character HTTP parser, H-bridge motor pin mapping, and the absence of a build/test system
