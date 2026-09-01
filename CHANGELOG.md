@@ -22,6 +22,12 @@ Exceptions are acceptable depending on the circumstances (critical bug fixes tha
 
 ## [Unreleased]
 
+## [0.4.1] - 2026-09-01
+
+### Changed
+
+- refreshed `.github/copilot-instructions.md` so the repository structure lists the `.changes/unreleased/` chlog directory, the `code-review` skill, and the `claude-review.yaml` / `claude-mention.yaml` workflows, and the build section notes those callers delegate to `rios0rios0/pipelines`
+
 ## [0.4.0] - 2026-08-28
 
 ### Added
