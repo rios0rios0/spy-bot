@@ -8,7 +8,7 @@ Spy Bot is a **discontinued** (September 2018) Arduino surveillance robot. The e
 
 ## Build / test / lint
 
-There is no build system, test suite, or linter — this is embedded firmware. Open `main.ino` in the Arduino IDE and upload over USB. `.github/workflows/release.yaml` only tags releases on pushes to `main`; it does not compile the sketch.
+There is no build system, test suite, or linter — this is embedded firmware. Open `main.ino` in the Arduino IDE and upload over USB. `.github/workflows/checks.yaml` runs the shared `rios0rios0/pipelines` gate (rebase status and the changelog rule) on pull requests to `main`, and `.github/workflows/release.yaml` tags releases on pushes to `main`; neither compiles the sketch.
 
 ## Non-obvious architecture
 
