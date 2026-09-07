@@ -30,6 +30,7 @@ spy-bot/
     │   └── code-review/
     │       └── SKILL.md         # Copilot code-review skill: how a change here is judged
     └── workflows/
+        ├── checks.yaml          # PR gate: rios0rios0/pipelines shared checks (rebase + changelog gate)
         ├── release.yaml         # Calls the rios0rios0/pipelines release workflow; tags on push to main
         ├── claude-review.yaml   # Automated Claude PR review (rios0rios0/pipelines reusable workflow)
         └── claude-mention.yaml  # @claude mention responder (rios0rios0/pipelines reusable workflow)
@@ -82,7 +83,7 @@ Pan/tilt commands are sent directly from the browser to the IP camera via CGI li
 
 ## Build and Deployment
 
-There is no automated build system or test suite — this is an embedded firmware project. The `.github/workflows/` callers all delegate to reusable workflows in `rios0rios0/pipelines`: `release.yaml` creates tags and releases on pushes to `main`, while `claude-review.yaml` and `claude-mention.yaml` run automated Claude PR review and `@claude` mention handling. None of them compile the sketch.
+There is no automated build system or test suite — this is an embedded firmware project. The `.github/workflows/` callers all delegate to reusable workflows in `rios0rios0/pipelines`: `checks.yaml` runs the shared PR gate (rebase and changelog checks) on pull requests to `main`, `release.yaml` creates tags and releases on pushes to `main`, while `claude-review.yaml` and `claude-mention.yaml` run automated Claude PR review and `@claude` mention handling. None of them compile the sketch.
 
 ### Hardware Requirements
 
