@@ -19,6 +19,7 @@ spy-bot/
 │   └── hold.js           # JavaScript library implementing long-press detection
 │                         #   with configurable delay (300ms) and event prevention
 ├── README.md             # Project documentation
+├── AGENTS.md             # Shared AI-agent instructions (CLAUDE.md only imports it)
 ├── CHANGELOG.md          # Release history (generated from chlog fragments; never hand-edited)
 ├── CONTRIBUTING.md       # Historical build information and discontinued status notice
 ├── LICENSE               # Project license
@@ -63,7 +64,7 @@ spy-bot/
 
 ### HTTP Request Parsing
 
-The Arduino reads incoming requests character by character, buffering from the `G` character (start of `GET`). Every 10 characters it checks the buffer for query parameter patterns (`?go=E/D/F/T/O`) and activates the corresponding motor pins. This avoids heap allocation on the constrained microcontroller.
+The Arduino reads incoming requests character by character, appending to a `String` buffer from the `G` character (start of `GET`). Every 10 characters it checks the buffer for query parameter patterns (`?go=E/D/F/T/O`), activates the corresponding motor pins, and resets the buffer — that reset is what keeps heap use bounded on the constrained microcontroller.
 
 ### Motor Control (Differential Drive)
 
@@ -111,7 +112,7 @@ There is no automated build system or test suite — this is an embedded firmwar
 - **Network configuration** — hardcoded MAC address and static IP (no DHCP)
 - **HTML generation** — string-based via `client.println()` to minimize heap use on constrained hardware
 - **JavaScript** — inline event handlers (`onmousedown`, `ontouchstart`) mixed into HTML output; no external dependencies
-- **Memory efficiency** — avoid `String` concatenation in hot paths; prefer character-level parsing
+- **Memory efficiency** — keep `String` growth bounded (the parser's `line` buffer is reset every 10 characters); do not add new `String` concatenation in hot paths
 
 ## Common Tasks
 
@@ -128,12 +129,14 @@ Search `main.ino` for `192.168.1.200` and replace with your camera's IP.
 
 ### Add a New Motor Direction
 
-1. Define a new query parameter value in the HTTP parsing block (around line 57)
-2. Add the corresponding `digitalWrite` calls in the motor control block (around line 67)
+1. Declare a new `boolean` flag alongside `left`/`right`/`front`/`back` (around line 43)
+2. Define a new query parameter value in the HTTP parsing block (around line 57)
+3. Add the corresponding `digitalWrite` calls in the motor control block (around line 67)
+4. Add a button and its JavaScript function to the served page (around lines 149 and 181), sending `off()` on release
 
 ### Modify the Hold-to-Click Delay
 
-Edit the delay value in `files/hold.js` (default: 300 ms).
+Edit the delay value in `files/hold.js` (default: 300 ms). The sketch does not serve this file, so the change affects only the standalone prototypes.
 
 <!-- chlog:start -->
 ## Changelog (chlog) — MANDATORY

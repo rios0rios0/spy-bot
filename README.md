@@ -50,7 +50,7 @@ files/
 
 ### HTTP Request Parsing
 
-The Arduino reads incoming HTTP requests character by character, buffering characters that follow a `G` (the start of `GET`). Every 10 characters, it checks the buffer for query parameter patterns (`?go=E`, `?go=D`, `?go=F`, `?go=T`, `?go=O`) and activates the corresponding motor pins. This lightweight parser avoids string allocation overhead on the constrained microcontroller.
+The Arduino reads incoming HTTP requests character by character, buffering characters that follow a `G` (the start of `GET`). Every 10 characters, it checks the buffer for query parameter patterns (`?go=E`, `?go=D`, `?go=F`, `?go=T`, `?go=O`), activates the corresponding motor pins, and clears the buffer, which keeps memory use bounded on the constrained microcontroller.
 
 ### Motor Control Logic
 

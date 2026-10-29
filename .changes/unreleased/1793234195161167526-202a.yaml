@@ -1,0 +1,3 @@
+kind: 'Changed'
+body: 'moved the agent instructions from `CLAUDE.md` to `AGENTS.md`, keeping a `CLAUDE.md` that imports it, and refreshed `AGENTS.md`, `README.md`, `.github/copilot-instructions.md`, and `.github/skills/code-review/SKILL.md` to point at `AGENTS.md`, describe the bounded `String` buffer of the request parser accurately, note that motor pins stay latched until `?go=O`, and drop severity examples that do not apply to this sketch'
+time: '2026-10-29T00:36:35.161092945Z'

@@ -1,6 +1,6 @@
-# CLAUDE.md
+# AGENTS.md
 
-This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
+This file provides guidance to AI coding agents (Claude Code, Codex, Cursor, GitHub Copilot) when working with code in this repository.
 
 ## What this is
 
@@ -13,7 +13,7 @@ There is no build system, test suite, or linter — this is embedded firmware. O
 ## Non-obvious architecture
 
 - **HTTP parsing is character-by-character, not line-based.** `loop()` reads one char at a time, appends to a `String` once a `G` is seen, and every 10th char (`i == 10`) scans the accumulated buffer for `?go=E/D/F/T/O`, then resets the buffer. There is no real request parser — adding routes means extending this windowed scan (`main.ino:50-65`).
-- **Motor control is differential drive over an H-bridge** on pins 4–7. Each command sets a specific pin pair HIGH (`main.ino:67-92`): Forward 7+5, Backward 4+6, Left 7+4, Right 6+5, Off all LOW. Turning runs the two motors in opposition.
+- **Motor control is differential drive over an H-bridge** on pins 4–7 (`main.ino:67-92`); turning runs the two motors in opposition. A direction command only sets its pin pair HIGH — nothing clears the previous pair except `?go=O`, which the served page sends on button release (`onmouseup`/`ontouchend`).
 - **Network config is hardcoded**, no DHCP: MAC at `main.ino:8`, static IP `192.168.1.101` at `main.ino:12`, camera `192.168.1.200:81` embedded in the served HTML (CGI links and the `videostream.cgi` iframe). Camera pan/tilt links target a hidden `null` iframe so the page does not reload.
 - **The whole UI is generated inline** via `client.println()` calls in the `\n`-on-blank-line block. There are no separate templates served at runtime; the `files/` directory holds standalone prototypes (`index.html`, `testehtml.html`, `hold.js`) that the sketch does **not** serve.
 
