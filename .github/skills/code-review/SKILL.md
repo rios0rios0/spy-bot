@@ -20,7 +20,7 @@ The canonical engineering standards live in the
 repo-tailored index into that guide plus the rules that only apply here. Precedence, highest
 first:
 
-1. This repository's `.github/copilot-instructions.md`, `CLAUDE.md`, and `CONTRIBUTING.md` —
+1. This repository's `.github/copilot-instructions.md`, `AGENTS.md`, and `CONTRIBUTING.md` —
    they describe *this* codebase and its load-bearing invariants.
 2. The **rios0rios0/guide** wiki — the shared standard.
 3. General language idiom.
@@ -45,9 +45,8 @@ guide disagree, the guide wins and this file should be corrected in the same pul
    `git symbolic-ref refs/remotes/origin/HEAD` (strip `refs/remotes/origin/`; fall back to `main`),
    then read the diff with `git diff <default>...HEAD` and the file list with
    `git diff <default>...HEAD --name-only`.
-2. **Read whole files, not just hunks.** A hunk cannot show a layering violation, a missing
-   test, or a duplicated helper. Open every changed file in full, plus the files it imports
-   from the layer below.
+2. **Read whole files, not just hunks.** A hunk cannot show what the rest of `main.ino`
+   relies on. Open every changed file in full.
 3. **Check the change set as a unit** — not only the code. A change that alters behaviour,
    configuration, or architecture is incomplete without its changelog entry and its
    documentation update, and that omission is a finding in its own right.
@@ -65,7 +64,7 @@ them before the generic ones.
 - **The web interface has no authentication and the board has no TLS.** Anyone on the network can drive the robot. That is inherent to the archive — do not ask for it to be fixed — but any change that widens exposure (port forwarding advice, a broader bind, a new remote command) must say so plainly, and the README's "local network only" framing has to survive.
 - **Motor control must fail safe.** The pins are driven as integer literals (4, 5, 6, 7); an H-bridge driven with both directions high shorts the driver. Every command path needs a defined stop, and a lost connection must stop the motors rather than leaving the last command latched.
 - **Memory is the binding constraint.** HTML is emitted with `client.println()` specifically to avoid heap use — a `String` concatenation added in a hot path fragments the heap on an Uno and produces intermittent, unexplainable lockups. **Critical** on this hardware.
-- **Request parsing is character-level.** `currentLineIsBlank` and the manual scan exist for the same reason; a parser change must keep the buffer bounded — an unbounded read from `client` is a straightforward overflow.
+- **Request parsing is character-level.** The manual scan appends to a `String` (`line`) that is reset every 10 characters, and `currentLineIsBlank` detects the end of the headers; a parser change must keep the buffer bounded — an unbounded read from `client` is a straightforward overflow.
 - **Network configuration is hard-coded**: MAC `0xDE,0xAD,0xBE,0xEF,0xFE,0xED`, static IP `192.168.1.101`, camera `192.168.1.200`. Those are documented placeholders users edit — a *real* MAC or a real public address committed here identifies a real device.
 - **Inline JavaScript event handlers** (`onmousedown`, `ontouchstart`) are mixed into the emitted HTML with no external dependencies — keep it that way; the board cannot serve a framework.
 - **`setup()` runs once and `loop()` runs continuously** — a blocking `delay()` added to `loop()` stops the robot responding, so prefer millis-based timing.
@@ -100,7 +99,7 @@ hand.
 - Fragment bodies start with a lowercase verb in simple past tense, capitalise proper nouns
   (GitHub, Go, Docker), and wrap code identifiers and versions in backticks.
 - `README.md` is updated whenever usage, setup, configuration, or architecture changes;
-  `.github/copilot-instructions.md` and `CLAUDE.md` whenever the workflow, commands, or
+  `.github/copilot-instructions.md` and `AGENTS.md` whenever the workflow, commands, or
   structure changes. Documentation and code ship in one commit.
 
 ## Git Flow and pull-request hygiene
@@ -166,7 +165,7 @@ A review that raises noise gets ignored. Do not report these:
 ### Change-control checklist
 - [ ] Changelog entry present for every behavioural change
 - [ ] `README.md` updated if usage, setup, or architecture changed
-- [ ] `.github/copilot-instructions.md` and `CLAUDE.md` updated if the workflow, commands, or structure changed
+- [ ] `.github/copilot-instructions.md` and `AGENTS.md` updated if the workflow, commands, or structure changed
 - [ ] Commit messages follow `type(SCOPE): message` in simple past tense
 - [ ] Breaking changes flagged in the commit footer, the changelog, and the PR description
 
@@ -178,8 +177,8 @@ A review that raises noise gets ignored. Do not report these:
 
 | Severity       | Use for                                                                                                                            |
 |----------------|------------------------------------------------------------------------------------------------------------------------------------|
-| **Critical**   | Broken dependency direction, a leaked secret, an injection or authentication flaw, a missing changelog entry, a banned mock library, a load-bearing invariant broken, a test deleted rather than fixed. |
-| **Warning**    | Naming that departs from the guide, a missing test for a new branch of logic, an unexplained magic value, a stale README or instructions file, a `switch` that should be a map. |
+| **Critical**   | A leaked secret, an injection or authentication flaw, a missing changelog entry, a load-bearing invariant from *What matters most* broken. |
+| **Warning**    | Naming that departs from the guide, an unexplained magic value, a stale README or instructions file. |
 | **Suggestion** | Readability, consistency with neighbouring modules, and performance ideas that no rule mandates.                                     |
 
 Rank findings most severe first, and state plainly when nothing blocks the merge — an empty
