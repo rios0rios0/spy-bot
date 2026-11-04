@@ -22,6 +22,12 @@ Exceptions are acceptable depending on the circumstances (critical bug fixes tha
 
 ## [Unreleased]
 
+## [0.5.2] - 2026-11-04
+
+### Changed
+
+- moved the agent instructions from `CLAUDE.md` to `AGENTS.md`, keeping a `CLAUDE.md` that imports it, and refreshed `AGENTS.md`, `README.md`, `.github/copilot-instructions.md`, and `.github/skills/code-review/SKILL.md` to point at `AGENTS.md`, describe the bounded `String` buffer of the request parser accurately, note that motor pins stay latched until `?go=O`, and drop severity examples that do not apply to this sketch
+
 ## [0.5.1] - 2026-09-08
 
 ### Changed
